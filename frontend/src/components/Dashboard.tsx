@@ -8,8 +8,9 @@ import Notes from './Notes'
 import Uploads from './Uploads'
 import Contact from './Contact'
 import NotificationManager from './NotificationManager'
+import Voting from './Voting'
 
-type Tab = 'notes' | 'uploads' | 'contact' | 'notifications'
+type Tab = 'notes' | 'uploads' | 'contact' | 'notifications' | 'voting'
 
 export default function Dashboard() {
   const dispatch = useDispatch<AppDispatch>()
@@ -62,6 +63,12 @@ export default function Dashboard() {
         >
           🔔 Notifications
         </button>
+        <button
+          className={`nav-tab ${activeTab === 'voting' ? 'active' : ''}`}
+          onClick={() => setActiveTab('voting')}
+        >
+          🗳️ Voting
+        </button>
       </nav>
 
       <main className="dashboard-content">
@@ -69,6 +76,7 @@ export default function Dashboard() {
         {activeTab === 'uploads' && <Uploads />}
         {activeTab === 'contact' && <Contact />}
         {activeTab === 'notifications' && <NotificationManager />}
+        {activeTab === 'voting' && <Voting />}
       </main>
     </div>
   )

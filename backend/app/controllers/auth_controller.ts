@@ -1,4 +1,5 @@
 import type { HttpContext } from '@adonisjs/core/http'
+import { DateTime } from 'luxon'
 import { registerValidator, loginValidator } from '#validators/auth'
 import authService from '#services/auth_service'
 import emailService from '#services/email_service'
@@ -75,7 +76,32 @@ export default class AuthController {
         name: user.name,
         email: user.email,
         role: user.role,
+        birthdate: user.birthdate?.toISODate() || null,
         createdAt: user.createdAt,
+      },
+    })
+  }
+
+  async updateProfile({ auth, request, response }: HttpContext) {
+    const user = auth.user!
+    const { name, birthdate } = request.only(['name', 'birthdate'])
+
+    if (name) user.name = name
+    if (birthdate) {
+      user.birthdate = DateTime.fromISO(birthdate)
+    }
+
+    await user.save()
+
+    return response.ok({
+      success: true,
+      message: 'Profile updated successfully',
+      data: {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+        birthdate: user.birthdate?.toISODate() || null,
       },
     })
   }

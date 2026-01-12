@@ -38,7 +38,7 @@ export default defineConfig({
   | Preloads
   |--------------------------------------------------------------------------
   */
-  preloads: [() => import('#start/routes'), () => import('#start/kernel')],
+  preloads: [() => import('#start/routes'), () => import('#start/kernel'), () => import('#start/events')],
 
   /*
   |--------------------------------------------------------------------------

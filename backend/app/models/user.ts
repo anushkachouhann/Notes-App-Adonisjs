@@ -36,6 +36,9 @@ export default class User extends compose(BaseModel, AuthFinder) {
   @column()
   declare avatarUrl: string | null
 
+  @column.date()
+  declare birthdate: DateTime | null
+
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
 

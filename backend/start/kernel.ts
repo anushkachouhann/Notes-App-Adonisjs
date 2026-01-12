@@ -21,6 +21,7 @@ const middleware = router.named({
   logger: () => import('#middleware/logger_middleware'),
   auth: () => import('#middleware/auth_middleware'),
   role: () => import('#middleware/role_middleware'),
+  ageVerification: () => import('#middleware/age_verification_middleware'),
 })
 
 export { middleware }

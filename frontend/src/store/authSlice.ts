@@ -8,6 +8,7 @@ interface User {
   email: string
   role: string
   avatarUrl?: string
+  birthdate?: string
 }
 
 interface AuthState {

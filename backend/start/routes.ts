@@ -6,6 +6,7 @@ const AuthController = () => import('#controllers/auth_controller')
 const NotesController = () => import('#controllers/notes_controller')
 const SocialAuthController = () => import('#controllers/social_auth_controller')
 const FcmNotificationsController = () => import('#controllers/fcm_notifications_controller')
+const VotesController = () => import('#controllers/votes_controller')
  
 router.get('/', async () => {
   return { message: 'Notes API is running!', version: '1.0.0' }
@@ -31,6 +32,7 @@ router
   .group(() => {
     router.post('/logout', [AuthController, 'logout'])
     router.get('/me', [AuthController, 'me'])
+    router.put('/me', [AuthController, 'updateProfile'])
     router.post('/query', [AuthController, 'sendQuery'])
   })
   .prefix('/auth')
@@ -94,3 +96,12 @@ router
   })
   .prefix('/fcm')
   .use([middleware.auth(), middleware.role({ roles: ['admin'] })])
+
+// Voting routes (protected - requires 18+ age verification)
+router
+  .group(() => {
+    router.post('/', [VotesController, 'store'])
+    router.put('/:id', [VotesController, 'update'])
+  })
+  .prefix('/votes')
+  .use([middleware.auth(), middleware.ageVerification()])
